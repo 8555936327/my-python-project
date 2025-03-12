@@ -20,18 +20,19 @@ jobs:
 
       - name: Install dependencies
         run: |
-          python -m venv venv 
-          source venv/bin/activate 
-          pip install --upgrade pip  
-          pip install -r requirements.txt  
+          python -m venv venv  # Create virtual environment
+          source venv/bin/activate  # Activate virtual environment
+          pip install --upgrade pip  # Upgrade pip to the latest version
+          pip install -r requirements.txt  # Install dependencies
 
       - name: Run tests
         run: |
-          source venv/bin/activate 
-          pytest  
+          source venv/bin/activate  # Activate virtual environment again if not already active
+          pytest  # Run pytest to execute tests
 
+      # This step is for uploading artifacts, but make sure you have something in 'build'
       - name: Upload Build Artifact
         uses: actions/upload-artifact@v4.6.1
         with:
           name: Package
-          path: build  
+          path: build  # Ensure 'build' directory exists and contains something to upload
