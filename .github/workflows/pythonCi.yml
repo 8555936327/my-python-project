@@ -1,0 +1,42 @@
+name: CI with Python setup for Application
+
+on:
+  push:
+    branches:
+      - main  
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout the repository
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+
+      # Step 2: Set up Python
+      - name: Setup Python
+        uses: actions/setup-python@v4.5.0
+        with:
+          python-version: '3.9'  # Specify the Python version you need (e.g., '3.8', '3.9', etc.)
+
+      # Step 3: Install dependencies from requirements.txt
+      - name: Install dependencies
+        run: |
+          python -m venv venv  # Create a virtual environment
+          source venv/bin/activate  # Activate the virtual environment
+          pip install --upgrade pip  # Upgrade pip
+          pip install -r requirements.txt  # Install dependencies from the requirements.txt
+
+      # Step 4: Run tests (you can change pytest to unittest or another testing framework if needed)
+      - name: Run tests
+        run: |
+          source venv/bin/activate  # Activate the virtual environment again (in case it's not already activated)
+          pytest  # Runs the tests using pytest (change this command if using a different testing framework)
+
+      # Step 5: Upload a build artifact (optional, if you generate any files you want to save)
+      - name: Upload Build Artifact
+        uses: actions/upload-artifact@v4.6.1
+        with:
+          name: Package
+          path: build  # Adjust this path to the directory where your build artifacts are located (if any)
