@@ -1,5 +1,5 @@
 # tests/test_main.py
-
+from ..main import add, subtract, multiply, divide
 import pytest
 from main import some_function
 
